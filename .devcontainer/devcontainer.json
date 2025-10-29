@@ -1,59 +1,32 @@
-{
-  // A friendly name for your environment
-  "name": "Rust Development Playground",
+        {
+          // A friendly name for your environment
+          "name": "Rust Development Environment",
 
-  // This is the "base" container image. 
-  // We're using one of Microsoft's universal images, which comes with
-  // common tools like git, curl, zsh, etc.
-  "image": "mcr.microsoft.com/devcontainers/universal:2",
+          // Use an official Rust base image directly.
+          // This image *already* has rustc, cargo, rustup installed.
+          "image": "mcr.microsoft.com/devcontainers/rust:1",
 
-  // "Features" are pre-packaged tools you can easily "bolt on" to the base image.
-  // This is the magic part that adds the entire Rust toolchain.
-  "features": {
-    "ghcr.io/devcontainers/features/rust:1": {
-      "version": "latest",     // Install the latest stable Rust
-      "profile": "default"   // Use the default rustup profile
-    }
-  },
+          // Commands to run *after* the container starts (optional but good practice)
+          "postCreateCommand": "rustup update && sudo apt-get update && sudo apt-get install -y lldb", 
+          // Installs debugger (lldb)
 
-  // These commands will run *after* the container is created.
-  // A good place to update everything to the latest version.
-  "postCreateCommand": "rustup update",
-
-  // This tells Codespaces which ports to automatically forward.
-  // If you run a web server (e.g., `cargo run`), it will be on port 8080,
-  // and Codespaces will give you a "Open in Browser" button.
-  "forwardPorts": [8080],
-
-  // This section customizes the VS Code editor inside the codespace.
-  "customizations": {
-    "vscode": {
-      // A list of VS Code extensions to automatically install.
-      "extensions": [
-        // The *essential* extension for Rust. Provides code completion,
-        // error checking, and "go to definition".
-        "rust-lang.rust-analyzer",
-
-        // A native debugger extension for Rust.
-        "vadimcn.vscode-lldb",
-
-        // A helper extension that helps manage dependencies in your Cargo.toml file.
-        "serayuzgur.crates",
-
-        // Provides better syntax highlighting for .toml files (like Cargo.toml).
-        "tamasfe.even-better-toml"
-      ],
-
-      // Default settings to apply inside the VS Code editor.
-      "settings": {
-        // Automatically run `rustfmt` every time you save a file.
-        "editor.formatOnSave": true,
-
-        // Tell the editor to use rust-analyzer as the default formatter for Rust files.
-        "[rust]": {
-          "editor.defaultFormatter": "rust-lang.rust-analyzer"
+          // Customizations for VS Code (extensions, settings)
+          "customizations": {
+            "vscode": {
+              "extensions": [
+                "rust-lang.rust-analyzer",
+                "vadimcn.vscode-lldb",
+                "serayuzgur.crates",
+                "tamasfe.even-better-toml"
+              ],
+              "settings": {
+                "editor.formatOnSave": true,
+                "[rust]": {
+                  "editor.defaultFormatter": "rust-lang.rust-analyzer"
+                }
+              }
+            }
+          }
         }
-      }
-    }
-  }
-}
+        
+
